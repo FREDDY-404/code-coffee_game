@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Activates - Charades & Debug Wars</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandMark">Code & Coffee</div>
+      <div>
+        <div class="brandTitle">Game Activates</div>
+        <div class="brandSub">Programming Charades | Team Debug Wars</div>
+      </div>
+    </div>
+
+    <nav class="tabs" aria-label="Game Tabs">
+      <button class="tab active" data-view="homeView">Home</button>
+      <button class="tab" data-view="charadesView">Programming Charades</button>
+      <button class="tab" data-view="debugView">Team Debug Wars</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- HOME -->
+    <section id="homeView" class="view active">
+      <div class="hero">
+        <div class="heroLeft">
+          <h1>Pick a game mode</h1>
+          <p class="muted">
+            Clean, modern, and easy to run in class or workshops.
+            Use one projector plus phones, or one laptop per team.
+          </p>
+          <div class="ctaRow">
+            <button class="btn primary" id="goCharades">Play Charades</button>
+            <button class="btn secondary" id="goDebug">Play Debug Wars</button>
+          </div>
+
+          <div class="tips">
+            <div class="tipCard">
+              <div class="tipTitle">Charades rule</div>
+              <div class="tipText">Player 1 sees the logo and acts it out. Player 2 types the language name.</div>
+            </div>
+            <div class="tipCard">
+              <div class="tipTitle">Debug Wars rule</div>
+              <div class="tipText">Show one random debugging question at a time and solve it before moving next.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="heroRight">
+          <div class="statsGrid">
+            <div class="statCard">
+              <div class="statValue" id="statCharadesScore">0</div>
+              <div class="statLabel">Charades Score</div>
+            </div>
+            <div class="statCard">
+              <div class="statValue" id="statDebugRounds">0</div>
+              <div class="statLabel">Debug Rounds Played</div>
+            </div>
+            <div class="statCard">
+              <div class="statValue" id="statDebugTopTeam">-</div>
+              <div class="statLabel">Debug Accuracy</div>
+            </div>
+            <div class="statCard">
+              <div class="statValue" id="statTotalAnswers">0</div>
+              <div class="statLabel">Answers Submitted</div>
+            </div>
+          </div>
+
+          <div class="panel glow">
+            <div class="panelTitle">Quick Start</div>
+            <ol class="steps">
+              <li>Choose a game tab.</li>
+              <li>Press <b>Start</b>.</li>
+              <li>Play rounds and track scores.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARADES -->
+    <section id="charadesView" class="view">
+      <div class="viewHeader">
+        <div>
+          <h2>Programming Charades</h2>
+          <p class="muted">Show a real programming language logo. Player 2 guesses the language.</p>
+        </div>
+        <div class="viewActions">
+          <button class="btn ghost" id="charadesReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card charadesCard">
+          <div class="cardHeader">
+            <div class="cardTitle">Logo Card (Player 1)</div>
+            <div class="badge" id="charadesRoundBadge">Round 1</div>
+          </div>
+
+          <div class="logoStage">
+            <div class="logoFrame" id="logoFrame" aria-label="Programming language logo"></div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="charadesStart">Start / Next</button>
+            <button class="btn secondary" id="charadesHint">Hint</button>
+            <button class="btn danger" id="charadesReveal">Reveal</button>
+          </div>
+
+          <div class="hintLine" id="hintLine">Hint: -</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEBUG WARS -->
+    <section id="debugView" class="view">
+      <div class="viewHeader">
+        <div>
+          <h2>Team Debug Wars</h2>
+          <p class="muted">Pick a team to reveal its 5-question ladder from easy to difficult.</p>
+        </div>
+        <div class="viewActions">
+          <button class="btn ghost" id="debugReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelTop">
+          <div class="panelTitle">Team Controls</div>
+          <div class="panelRight">
+            <div class="pill">Questions Completed: <span id="debugRounds">0</span></div>
+            <button class="btn primary" id="debugNewRound">Next Question</button>
+            <button class="btn secondary" id="debugSubmit">Submit Answer</button>
+          </div>
+        </div>
+        <div class="muted small">
+          Select a team, answer each question, then click <b>Next Question</b> to move forward.
+        </div>
+      </div>
+
+      <div class="teamsGrid" id="teamsGrid" aria-label="Debug Wars team selection"></div>
+
+      <div class="panel" id="teamQuestionPanel" hidden>
+        <div class="panelTop">
+          <div class="panelTitle" id="teamQuestionTitle">Team Questions</div>
+          <div class="panelRight">
+            <div class="pill" id="teamQuestionProgress">Question 1 of 5</div>
+          </div>
+        </div>
+        <div class="teamQuestionBody" id="teamQuestionBody"></div>
+      </div>
+
+      <div class="panel glow">
+        <div class="panelTop">
+          <div class="panelTitle">Scoreboard</div>
+          <div class="panelRight">
+            <div class="pill">Total Submissions: <span id="totalSubmissions">0</span></div>
+          </div>
+        </div>
+        <div class="scoreboard" id="scoreboard"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="muted small">Code & Coffee</div>
+  </footer>
+
+  <div class="modal" id="winnerModal" aria-hidden="true">
+    <div class="modalBackdrop" data-close="winnerModal"></div>
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
+      <div class="modalIcon">🏆</div>
+      <div class="modalTitle" id="winnerTitle">Winner!</div>
+      <div class="modalBody" id="winnerBody">Team summary</div>
+      <div class="modalActions">
+        <button class="btn primary" id="winnerClose" type="button">Close</button>
+        <button class="btn ghost" id="winnerReset" type="button">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
