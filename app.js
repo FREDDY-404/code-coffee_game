@@ -678,6 +678,26 @@ function shuffle(arr) {
   return a;
 }
 
+function shuffleOptions(options, answerIndex) {
+  const items = options.map((text, idx) => ({ text, idx }));
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  const newOptions = items.map(item => item.text);
+  const newAnswerIndex = items.findIndex(item => item.idx === answerIndex);
+  return { options: newOptions, answerIndex: newAnswerIndex };
+}
+
+function cloneQuestionWithShuffledOptions(q) {
+  const shuffled = shuffleOptions(q.options, q.answerIndex);
+  return {
+    ...q,
+    options: shuffled.options,
+    answerIndex: shuffled.answerIndex
+  };
+}
+
 function escapeHtml(s){
   return String(s)
     .replaceAll("&","&amp;")
@@ -707,7 +727,9 @@ function assignQuestionsToTeams() {
       byLevel[3][idx],
       byLevel[4][idx],
       byLevel[5][idx],
-    ].filter(Boolean);
+    ]
+      .filter(Boolean)
+      .map(cloneQuestionWithShuffledOptions);
 
     teamQuestionSets[team.id] = ladder;
     teamProgress[team.id] = {
