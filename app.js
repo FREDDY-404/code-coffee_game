@@ -43,12 +43,28 @@ const LANGS = [
   { name: "C#", aliases: ["c#", "csharp", "c sharp"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
   { name: "Python", aliases: ["python", "py"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
   { name: "JavaScript", aliases: ["javascript", "js", "java script"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "React", aliases: ["react", "reactjs", "react.js"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Node.js", aliases: ["node", "nodejs", "node.js"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
   { name: "Java", aliases: ["java"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
   { name: "C++", aliases: ["c++", "cpp", "c plus plus"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
   { name: "Ruby", aliases: ["ruby", "rb"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
   { name: "Swift", aliases: ["swift"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
   { name: "Kotlin", aliases: ["kotlin", "kt"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
   { name: "Rust", aliases: ["rust"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" },
+  { name: "Scala", aliases: ["scala"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scala/scala-original.svg" },
+  { name: "Haskell", aliases: ["haskell", "hs"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/haskell/haskell-original.svg" },
+  { name: "Elixir", aliases: ["elixir", "ex"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elixir/elixir-original.svg" },
+  { name: "Erlang", aliases: ["erlang"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/erlang/erlang-original.svg" },
+  { name: "Objective-C", aliases: ["objective-c", "objective c", "objc"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/objectivec/objectivec-plain.svg" },
+  { name: "Perl", aliases: ["perl", "pl"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/perl/perl-original.svg" },
+  { name: "Groovy", aliases: ["groovy"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/groovy/groovy-original.svg" },
+  { name: "OCaml", aliases: ["ocaml", "ml"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ocaml/ocaml-original.svg" },
+  { name: "D", aliases: ["d", "dlang"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dlang/dlang-original.svg" },
+  { name: "Crystal", aliases: ["crystal"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/crystal/crystal-original.svg" },
+  { name: "Julia", aliases: ["julia", "jl"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/julia/julia-original.svg" },
+  { name: "MATLAB", aliases: ["matlab"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" },
+  { name: "Clojure", aliases: ["clojure", "clj"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/clojure/clojure-original.svg" },
+  { name: "F#", aliases: ["f#", "fsharp", "f sharp"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fsharp/fsharp-original.svg" },
   { name: "CSS", aliases: ["css", "cascading style sheets"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
   { name: "HTML", aliases: ["html", "html5"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
   { name: "PHP", aliases: ["php"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
@@ -642,6 +658,8 @@ const teamQuestionPanel = document.getElementById("teamQuestionPanel");
 const teamQuestionTitle = document.getElementById("teamQuestionTitle");
 const teamQuestionProgress = document.getElementById("teamQuestionProgress");
 const teamQuestionBody = document.getElementById("teamQuestionBody");
+const teamLeaderboardEl = document.getElementById("teamLeaderboard");
+const leaderNameEl = document.getElementById("leaderName");
 
 let debugRounds = 0;
 let debugCorrectAnswers = 0;
@@ -737,6 +755,7 @@ function renderScoreboard() {
   debugRoundsEl.textContent = String(debugRounds);
   totalSubmissionsEl.textContent = String(statTotalAnswers);
   updateHomeStats();
+  renderTeamLeaderboard();
 }
 
 function renderTeams() {
@@ -752,6 +771,76 @@ function renderTeams() {
       selectTeam(btn.dataset.team);
     });
   });
+}
+
+function renderTeamLeaderboard() {
+  if (!teamLeaderboardEl) return;
+
+  const rows = TEAMS.map(team => {
+    const stats = teamStats[team.id] || { attempts: 0, correct: 0 };
+    const attempts = stats.attempts;
+    const correct = stats.correct;
+    const accuracy = attempts === 0 ? 0 : Math.round((correct / attempts) * 100);
+    const finished = isTeamFinished(team.id);
+
+    let status = "Not Started";
+    if (finished) status = "Completed";
+    else if (attempts > 0) status = "Playing";
+
+    return {
+      team,
+      attempts,
+      correct,
+      accuracy,
+      status
+    };
+  });
+
+  const activeRows = rows.filter(r => r.attempts > 0);
+  let leaders = [];
+  if (activeRows.length > 0) {
+    let best = activeRows[0];
+    leaders = [best];
+    for (let i = 1; i < activeRows.length; i++) {
+      const r = activeRows[i];
+      if (r.accuracy > best.accuracy || (r.accuracy === best.accuracy && r.correct > best.correct)) {
+        best = r;
+        leaders = [r];
+      } else if (r.accuracy === best.accuracy && r.correct === best.correct) {
+        leaders.push(r);
+      }
+    }
+  }
+
+  if (leaderNameEl) {
+    if (leaders.length === 0) {
+      leaderNameEl.textContent = "-";
+    } else {
+      leaderNameEl.textContent = leaders.map(l => l.team.name).join(" • ");
+    }
+  }
+
+  const leaderIds = new Set(leaders.map(l => l.team.id));
+
+  const tbody = rows.map(r => {
+    const isLeader = leaderIds.has(r.team.id);
+    const statusClass = r.status === "Completed" ? "statusPill done" : "statusPill";
+    const statusText = isLeader
+      ? `<span class="leaderTag">Leader</span>`
+      : `<span class="${statusClass}">${r.status}</span>`;
+
+    return `
+      <tr class="leaderRow${isLeader ? " lead" : ""}">
+        <td>${escapeHtml(r.team.name)}</td>
+        <td>${r.correct}</td>
+        <td>${r.attempts}</td>
+        <td>${r.accuracy}%</td>
+        <td>${statusText}</td>
+      </tr>
+    `;
+  }).join("");
+
+  teamLeaderboardEl.querySelector("tbody").innerHTML = tbody;
 }
 
 function renderTeamQuestionPanel() {

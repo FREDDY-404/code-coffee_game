@@ -826,6 +826,72 @@ p {
   gap: var(--space-3);
 }
 
+.leaderboardWrap {
+  margin-top: var(--space-3);
+  overflow-x: auto;
+}
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+  font-size: 15px;
+}
+
+.leaderboard th,
+.leaderboard td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--stroke);
+}
+
+.leaderboard th {
+  font-family: "Outfit", "Trebuchet MS", sans-serif;
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.leaderboard td {
+  font-weight: 600;
+}
+
+.leaderRow.lead {
+  background: linear-gradient(90deg, rgba(58, 123, 213, 0.12), rgba(75, 183, 200, 0.06));
+}
+
+.leaderTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #bdd6f5;
+  background: #eef5ff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f4f8c;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #cfe0f6;
+  background: #f6faff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #33507a;
+}
+
+.statusPill.done {
+  border-color: #bde7f0;
+  background: #e7f7fb;
+  color: #1c6f84;
+}
+
 @media (max-width: 980px) {
   .scoreboard {
     grid-template-columns: 1fr 1fr;
