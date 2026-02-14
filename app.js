@@ -42,11 +42,21 @@ const LANGS = [
   { name: "Type Script", aliases: ["type script", "typescript", "ts"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   { name: "C#", aliases: ["c#", "csharp", "c sharp"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
   { name: "Python", aliases: ["python", "py"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "JavaScript", aliases: ["javascript", "js", "java script"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "Java", aliases: ["java"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { name: "C++", aliases: ["c++", "cpp", "c plus plus"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+  { name: "Ruby", aliases: ["ruby", "rb"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
+  { name: "Swift", aliases: ["swift"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
+  { name: "Kotlin", aliases: ["kotlin", "kt"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
+  { name: "Rust", aliases: ["rust"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" },
   { name: "CSS", aliases: ["css", "cascading style sheets"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+  { name: "HTML", aliases: ["html", "html5"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
   { name: "PHP", aliases: ["php"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
   { name: "C", aliases: ["c", "c language"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
   { name: "R", aliases: ["r", "r language"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" },
   { name: "Dart", aliases: ["dart"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
+  { name: "Bash", aliases: ["bash", "shell", "sh"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" },
+  { name: "Lua", aliases: ["lua"], logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg" },
 ];
 
 function showLanguageLogo(lang) {
