@@ -64,7 +64,7 @@ function showLanguageLogo(lang) {
 
   const caption = document.createElement("div");
   caption.className = "logoCaption";
-  caption.textContent = "(Act it out - do not say it!)";
+  caption.textContent = `Language: ${lang.name}`;
 
   img.addEventListener("error", () => {
     img.replaceWith(buildLogoFallback(lang.name));
